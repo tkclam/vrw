@@ -24,13 +24,14 @@ class PyAvBackend(Backend):
         self._stream = None
 
     def _init(self, frame_shape):
-        assert len(frame_shape) == 2
+        if len(frame_shape) not in (2, 3):
+            raise ValueError("frame_shape must be (H, W) or (H, W, C)")
         height, width = frame_shape[:2]
         self._container = av.open(self._filename, "w")
         self._stream = self._container.add_stream(self._codec, rate=self._fps)
         self._stream.width = width
         self._stream.height = height
-        self._stream.pix_fmt = "gray"
+        self._stream.pix_fmt = "gray" if len(frame_shape) == 2 else "yuv420p"
         self._stream.options = self._kwargs
         if self._codec == "libx265":
             self._stream.codec_context.codec_tag = "hvc1"
@@ -39,7 +40,8 @@ class PyAvBackend(Backend):
         if self._container is None or self._container is None:
             self._init(frame.shape)
 
-        im = av.VideoFrame.from_ndarray(frame, format="gray")
+        fmt = "gray" if len(frame.shape) == 2 else "rgb24"
+        im = av.VideoFrame.from_ndarray(frame, format=fmt)
         for packet in self._stream.encode(im):
             self._container.mux(packet)
         self._n_frames += 1
