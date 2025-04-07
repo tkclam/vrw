@@ -1,6 +1,7 @@
 from .backend import Backend
 from os import PathLike
 import numpy as np
+from functools import cached_property
 import cv2
 
 
@@ -18,13 +19,17 @@ class Cv2Backend(Backend):
             self._color_mode = cv2.COLOR_BGR2RGB
 
     def get_frame(self, frame_id: int) -> np.ndarray:
+        if frame_id < -self.n_frames or frame_id >= self.n_frames:
+            raise IndexError(f"Frame {frame_id} out of range")
+        if frame_id < 0:
+            frame_id += self.n_frames
         self._cap.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
         ret, frame = self._cap.read()
         if not ret:
             raise IndexError(f"Frame {frame_id} not found")
         return cv2.cvtColor(frame, self._color_mode)
 
-    @property
+    @cached_property
     def n_frames(self) -> int:
         return int(self._cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
@@ -41,7 +46,6 @@ class Cv2Backend(Backend):
         return int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
     def close(self):
-        super().close()
         if self._cap.isOpened():
             self._cap.release()
 

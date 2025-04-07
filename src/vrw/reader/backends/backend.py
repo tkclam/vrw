@@ -22,6 +22,19 @@ class Backend(ABC):
     def get_frame(self, frame_id: int) -> np.ndarray:
         pass
 
+    def iter_frames(self, frame_ids):
+        for i in frame_ids:
+            yield self.get_frame(i)
+
+    def iter_slice(self, slice_: slice):
+        return self.iter_frames(range(*slice_.indices(self.n_frames)))
+
+    def iter_continuous_slice(self, start: int, stop: int):
+        return self.iter_slice(slice(start, stop))
+
+    def iter_all_frames(self):
+        return self.iter_continuous_slice(0, self.n_frames)
+
     @property
     @abstractmethod
     def n_frames(self) -> int:
@@ -57,3 +70,8 @@ class Backend(ABC):
     def close(self):
         """Close the video file."""
         pass
+
+    @property
+    def dtype(self) -> np.dtype:
+        """Data type of the frames."""
+        return np.uint8
