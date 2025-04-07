@@ -2,6 +2,7 @@ from .backend import Backend
 import cv2
 import numpy as np
 
+
 class Cv2Backend(Backend):
     def __init__(self, filename: str, fps: float, fourcc="mp4v"):
         super().__init__(filename=filename, fps=fps)
@@ -18,9 +19,9 @@ class Cv2Backend(Backend):
             cv2.VideoWriter_fourcc(*self._fourcc),
             self._fps,
             (w, h),
-            is_color
+            is_color,
         )
-    
+
     def write(self, frame: np.ndarray):
         frame = np.asarray(frame)
         if self._writer is None:

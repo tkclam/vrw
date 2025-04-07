@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import numpy as np
 
+
 class Backend(ABC):
     def __init__(self, filename: str, fps: float):
         self._filename = filename
@@ -11,8 +12,13 @@ class Backend(ABC):
     def from_name(name: str):
         if name == "cv2":
             from .cv2_backend import Cv2Backend
+
             return Cv2Backend
-        raise ValueError(f"Unknown backend: {name}. Available backends: cv2")
+        elif name == "pyav":
+            from .pyav_backend import PyAvBackend
+
+            return PyAvBackend
+        raise ValueError(f"Unknown backend: {name}. Available backends: cv2, pyav")
 
     @abstractmethod
     def write(self, frame: np.ndarray):
