@@ -33,3 +33,12 @@ class VideoReader:
     @cached_property
     def shape(self) -> tuple[int, int, int, int] | tuple[int, int, int]:
         return self._backend.shape
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        from .backends.closed_backend import ClosedBackend
+
+        self._backend.close()
+        self._backend = ClosedBackend()

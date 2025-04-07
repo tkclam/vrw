@@ -39,3 +39,11 @@ class Cv2Backend(Backend):
     @property
     def height(self) -> int:
         return int(self._cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    def close(self):
+        super().close()
+        if self._cap.isOpened():
+            self._cap.release()
+
+    def __del__(self):
+        self.close()

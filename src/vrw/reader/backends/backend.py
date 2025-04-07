@@ -53,3 +53,7 @@ class Backend(ABC):
             return self.n_frames, self.height, self.width
         else:
             return self.n_frames, self.height, self.width, 3
+
+    def close(self):
+        """Close the video file."""
+        pass
