@@ -95,11 +95,16 @@ class VideoReader:
     def dtype(self) -> np.dtype:
         return self._backend.dtype
 
+    def close(self):
+        self._backend.close()
+        self._backend = None
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        from .backends.closed_backend import ClosedBackend
+        self.close()
+        return False
 
-        self._backend.close()
-        self._backend = ClosedBackend()
+    def __del__(self):
+        self.close()
