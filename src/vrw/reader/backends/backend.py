@@ -15,8 +15,10 @@ class Backend(ABC):
             from .cv2_backend import Cv2Backend
 
             return Cv2Backend
-        else:
-            raise NotImplementedError(f"Backend '{name}' is not implemented.")
+
+        raise NotImplementedError(
+            f"Backend '{name}' is not implemented. Available backends: cv2"
+        )
 
     @abstractmethod
     def get_frame(self, frame_id: int) -> np.ndarray:
