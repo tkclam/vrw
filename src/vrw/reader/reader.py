@@ -63,6 +63,9 @@ class VideoReader:
             frames = np.empty((0, *self.shape[1:]), dtype=self.dtype)
         return frames
 
+    def __iter__(self):
+        return self._backend.iter_all_frames()
+
     def __array__(self, dtype=None, copy=None):
         if dtype is None:
             dtype = self.dtype
