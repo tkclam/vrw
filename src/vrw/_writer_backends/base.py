@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-class Backend(ABC):
+class WriterBackend(ABC):
     def __init__(self, filename: str, fps: float):
         self._filename = filename
         self._fps = fps

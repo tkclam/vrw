@@ -1,10 +1,12 @@
-from .backends import Backend
+from ._writer_backends import WriterBackend
 import numpy as np
+
+__all__ = ["VideoWriter"]
 
 
 class VideoWriter:
     def __init__(self, filename: str, fps: float, backend: str = "cv2", **kwargs):
-        self._backend = Backend.from_name(backend)(filename, fps, **kwargs)
+        self._backend = WriterBackend.from_name(backend)(filename, fps, **kwargs)
 
     def write(self, frame: np.ndarray):
         """Write a frame to the video file."""

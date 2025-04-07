@@ -1,9 +1,9 @@
-from .backend import Backend
+from .base import WriterBackend
 import cv2
 import numpy as np
 
 
-class Cv2Backend(Backend):
+class Cv2Backend(WriterBackend):
     def __init__(self, filename: str, fps: float, fourcc="mp4v"):
         super().__init__(filename=filename, fps=fps)
         self._fourcc = fourcc

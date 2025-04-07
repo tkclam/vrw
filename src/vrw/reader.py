@@ -1,12 +1,14 @@
 from functools import cache, cached_property
 import numpy as np
 from os import PathLike
-from .backends import Backend
+from ._reader_backends import ReaderBackend
+
+__all__ = ["VideoReader"]
 
 
 class VideoReader:
     def __init__(self, path: str | PathLike, to_gray=False, backend="cv2"):
-        self._backend = Backend.from_name(backend)(path, to_gray=to_gray)
+        self._backend = ReaderBackend.from_name(backend)(path, to_gray=to_gray)
 
     def _get_frames_iter(self, key):
         if key is Ellipsis:

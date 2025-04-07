@@ -3,13 +3,13 @@ import numpy as np
 from os import PathLike
 
 
-class Backend(ABC):
+class ReaderBackend(ABC):
     def __init__(self, path: str | PathLike, to_gray: bool):
         self._path = str(path)
         self._to_gray = to_gray
 
     @staticmethod
-    def from_name(name: str) -> type["Backend"]:
+    def from_name(name: str) -> type["ReaderBackend"]:
         """Create a Backend instance from a name."""
         if name == "cv2":
             from .cv2_backend import Cv2Backend

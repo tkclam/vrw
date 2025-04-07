@@ -1,8 +1,8 @@
-from .backend import Backend
+from .base import WriterBackend
 import av
 
 
-class PyAvBackend(Backend):
+class PyAvBackend(WriterBackend):
     def __init__(
         self,
         filename: str,

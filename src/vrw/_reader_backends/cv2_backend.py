@@ -1,11 +1,11 @@
-from .backend import Backend
+from .base import ReaderBackend
 from os import PathLike
 import numpy as np
 from functools import cached_property
 import cv2
 
 
-class Cv2Backend(Backend):
+class Cv2Backend(ReaderBackend):
     def __init__(self, path: str | PathLike, to_gray=False):
         super().__init__(path, to_gray)
 

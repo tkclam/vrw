@@ -1,7 +1,7 @@
-from .backend import Backend
+from .base import ReaderBackend
 
 
-class ClosedBackend(Backend):
+class ClosedBackend(ReaderBackend):
     def __init__(self):
         super().__init__(path="", to_gray=False)
 
