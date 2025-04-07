@@ -1,2 +1,3 @@
-def main() -> None:
-    print("Hello from vrw!")
+from vrw.reader import VideoReader
+
+__all__ = ["VideoReader"]

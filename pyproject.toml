@@ -11,14 +11,13 @@ dependencies = [
     "opencv-python>=4.11.0.86",
 ]
 
-[project.scripts]
-vrw = "vrw:main"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
     "pre-commit>=4.2.0",
 ]
