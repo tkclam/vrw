@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 from os import PathLike
 
+
 class Backend(ABC):
     def __init__(self, path: str | PathLike, to_gray: bool):
         self._path = str(path)
@@ -12,6 +13,7 @@ class Backend(ABC):
         """Create a Backend instance from a name."""
         if name == "cv2":
             from .cv2_backend import Cv2Backend
+
             return Cv2Backend
         else:
             raise NotImplementedError(f"Backend '{name}' is not implemented.")
