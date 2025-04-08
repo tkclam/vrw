@@ -1,5 +1,7 @@
 # vrw: A Simple Library for Video Reading and Writing
 
+![PyPI](https://img.shields.io/pypi/v/vrw)
+
 `vrw` is a lightweight Python library for reading and writing video files with slicing support. It provides a simple interface for handling video frames using NumPy arrays and supports multiple backends like OpenCV and PyAV.
 
 ---
@@ -8,9 +10,7 @@
 To install `vrw`, use the following command:
 
 ```bash
-git clone https://github.com/tkclam/vrw
-cd vrw
-pip install .
+pip install vrw
 ```
 
 ---
