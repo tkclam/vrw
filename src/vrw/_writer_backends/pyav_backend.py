@@ -28,7 +28,13 @@ class PyAvBackend(WriterBackend):
             raise ValueError("frame_shape must be (H, W) or (H, W, C)")
         height, width = frame_shape[:2]
         self._container = av.open(self._filename, "w")
-        self._stream = self._container.add_stream(self._codec, rate=self._fps)
+        if round(self._fps) != self._fps:
+            import warnings
+
+            warnings.warn(
+                "The fps is not an integer. Rounding it to the nearest integer."
+            )
+        self._stream = self._container.add_stream(self._codec, rate=round(self._fps))
         self._stream.width = width
         self._stream.height = height
         self._stream.pix_fmt = "gray" if len(frame_shape) == 2 else "yuv420p"
